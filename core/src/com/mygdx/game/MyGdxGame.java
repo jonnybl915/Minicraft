@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -16,7 +17,10 @@ public class MyGdxGame extends ApplicationAdapter {
 	TextureRegion right;
 	TextureRegion left;
 	TextureRegion runRight;
-
+	Animation walkRight;
+	Animation walkLeft;
+	Animation run;
+	float time;
 	int movementMem;
 	float x, y, xv, yv;
 
@@ -36,79 +40,94 @@ public class MyGdxGame extends ApplicationAdapter {
 		left = new TextureRegion(right);
 		left.flip(true, false);
 		runRight = grid[7][3];
-
+		//walk = new Animation(0.2f, grid[6][3], grid[6][2]);
+		run = new Animation(0.2f, grid[7][3], grid[7][3]);
 	}
 
 	@Override
 	public void render () {
 		move();
+		time += Gdx.graphics.getDeltaTime();
 
 		Gdx.gl.glClearColor(.2f, 1, .7f, .5f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
+
+		TextureRegion tempImg;
+
 		if(movementMem ==3){
-			batch.draw(right, x, y, WIDTH*2, HEIGHT*2);
+
+			tempImg = right;
 		}
 		else if (movementMem ==4){
-			batch.draw(left, x, y, WIDTH*2, HEIGHT*2);
+			tempImg = left;
 		}
 		else if(movementMem == 2){
-			batch.draw(down, x, y, WIDTH*2, HEIGHT*2);
+			tempImg = down;
 		}
 		else if(movementMem == 1){
-			batch.draw(up, x, y, WIDTH*2, HEIGHT*2);
+			tempImg = up; //img = write
 		}
 		else{
-			batch.draw(right, x, y, WIDTH*2, HEIGHT*2);
+			tempImg = right;
 		}
+		batch.draw(tempImg, x, y, WIDTH*2, HEIGHT*2);
 		batch.end();
 	}
 	public void move(){
+		float velocityBoost = MAX_VELOCITY + MAX_VELOCITY;
+
 		if (Gdx.input.isKeyPressed(Input.Keys.UP)){
 			yv = MAX_VELOCITY;
+			if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+				yv = velocityBoost;
+			}
 			movementMem = 1;
+
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
 			yv = -MAX_VELOCITY;
+			if((Gdx.input.isKeyPressed(Input.Keys.SPACE))){
+				yv = -velocityBoost;
+			}
 			movementMem = 2;
 		}
 		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
 			xv = MAX_VELOCITY;
+			if((Gdx.input.isKeyPressed(Input.Keys.SPACE))){
+				xv = velocityBoost;
+			}
 			movementMem = 3;
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
 			xv = -MAX_VELOCITY;
+			if((Gdx.input.isKeyPressed(Input.Keys.SPACE))){
+				xv = -velocityBoost;
+			}
 			movementMem = 4;
 		}
 
-		if (Gdx.input.isKeyPressed(Input.Keys.UP) && Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-			yv = MAX_VELOCITY *2;
-			movementMem = 1;
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.DOWN) && Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-			yv = -MAX_VELOCITY *2;
-			movementMem = 2;
-		}
-		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-			xv = MAX_VELOCITY *2;
-			movementMem = 3;
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-			xv = -MAX_VELOCITY *2;
-			movementMem = 4;
-		}
-		if(x>995){
+		if(x>Gdx.graphics.getWidth()){
 			x = -5;
 		}
 		if(x<-5){
-			x = 990;
+			x = Gdx.graphics.getWidth();
 		}
 		if(y<-5){
-			y = 805;
+			y = Gdx.graphics.getHeight();
 		}
-		if (y>805){
-			y=0;
+		if (y>Gdx.graphics.getHeight()){
+			y=-5;
 		}
+		TextureRegion img;
+
+		//if(xv!=0){
+			//right = walk.getKeyFrame(time, true);
+			//left = walkLeft.getKeyFrame(time, true);
+		//}
+
+
+
 
 		float delta = Gdx.graphics.getDeltaTime(); //amount of seconds which have passed since the last frame
 		y+= yv * delta;
