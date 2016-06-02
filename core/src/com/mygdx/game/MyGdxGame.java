@@ -81,6 +81,35 @@ public class MyGdxGame extends ApplicationAdapter {
 			movementMem = 4;
 		}
 
+		if (Gdx.input.isKeyPressed(Input.Keys.UP) && Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+			yv = MAX_VELOCITY *2;
+			movementMem = 1;
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.DOWN) && Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+			yv = -MAX_VELOCITY *2;
+			movementMem = 2;
+		}
+		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+			xv = MAX_VELOCITY *2;
+			movementMem = 3;
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+			xv = -MAX_VELOCITY *2;
+			movementMem = 4;
+		}
+		if(x>995){
+			x = -5;
+		}
+		if(x<-5){
+			x = 990;
+		}
+		if(y<-5){
+			y = 805;
+		}
+		if (y>805){
+			y=0;
+		}
+
 		float delta = Gdx.graphics.getDeltaTime(); //amount of seconds which have passed since the last frame
 		y+= yv * delta;
 		x+= xv * delta;
