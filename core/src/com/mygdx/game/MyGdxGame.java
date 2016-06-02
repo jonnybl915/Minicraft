@@ -16,7 +16,10 @@ public class MyGdxGame extends ApplicationAdapter {
 	TextureRegion up;
 	TextureRegion right;
 	TextureRegion left;
-	Animation walk;
+	TextureRegion standingR;
+	TextureRegion standingL;
+	Animation walkRight;
+	Animation walkLeft;
 	float time;
 	int movementMem;
 	float x, y, xv, yv;
@@ -36,7 +39,12 @@ public class MyGdxGame extends ApplicationAdapter {
 		right = grid[6][3];
 		left = new TextureRegion(right);
 		left.flip(true, false);
-		walk = new Animation(0.2f, grid[6][3], grid[6][2]);
+		standingR = grid[6][2];
+		standingL = new TextureRegion(standingR);
+		standingL.flip(true, false);
+		walkRight = new Animation(0.2f, grid[6][3], grid[6][2]);
+		walkLeft = new Animation(0.2f, left, standingL);
+		walkUp = new Animation(0.2f, up, )
 	}
 
 	@Override
@@ -45,12 +53,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		time += Gdx.graphics.getDeltaTime();
 
 		if(xv>0){
-			right = walk.getKeyFrame(time, true);
+			right = walkRight.getKeyFrame(time, true);
 		}
 		if(xv<0){
-
-			left = (walk.getKeyFrame(time, true));
-
+			left = (walkLeft.getKeyFrame(time, true));
 		}
 
 		Gdx.gl.glClearColor(.2f, 1, .7f, .5f);
@@ -70,7 +76,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			tempImg = down;
 		}
 		else if(movementMem == 1){
-			tempImg = up; //img = write
+			tempImg = up;
 		}
 		else{
 			tempImg = right;
