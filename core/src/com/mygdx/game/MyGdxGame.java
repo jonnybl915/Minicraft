@@ -16,10 +16,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	TextureRegion up;
 	TextureRegion right;
 	TextureRegion left;
-	TextureRegion runRight;
-	Animation walkRight;
-	Animation walkLeft;
-	Animation run;
+	Animation walk;
 	float time;
 	int movementMem;
 	float x, y, xv, yv;
@@ -39,15 +36,22 @@ public class MyGdxGame extends ApplicationAdapter {
 		right = grid[6][3];
 		left = new TextureRegion(right);
 		left.flip(true, false);
-		runRight = grid[7][3];
-		//walk = new Animation(0.2f, grid[6][3], grid[6][2]);
-		run = new Animation(0.2f, grid[7][3], grid[7][3]);
+		walk = new Animation(0.2f, grid[6][3], grid[6][2]);
 	}
 
 	@Override
 	public void render () {
 		move();
 		time += Gdx.graphics.getDeltaTime();
+
+		if(xv>0){
+			right = walk.getKeyFrame(time, true);
+		}
+		if(xv<0){
+
+			left = (walk.getKeyFrame(time, true));
+
+		}
 
 		Gdx.gl.glClearColor(.2f, 1, .7f, .5f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -98,6 +102,7 @@ public class MyGdxGame extends ApplicationAdapter {
 				xv = velocityBoost;
 			}
 			movementMem = 3;
+
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
 			xv = -MAX_VELOCITY;
@@ -119,16 +124,6 @@ public class MyGdxGame extends ApplicationAdapter {
 		if (y>Gdx.graphics.getHeight()){
 			y=-5;
 		}
-		TextureRegion img;
-
-		//if(xv!=0){
-			//right = walk.getKeyFrame(time, true);
-			//left = walkLeft.getKeyFrame(time, true);
-		//}
-
-
-
-
 		float delta = Gdx.graphics.getDeltaTime(); //amount of seconds which have passed since the last frame
 		y+= yv * delta;
 		x+= xv * delta;
