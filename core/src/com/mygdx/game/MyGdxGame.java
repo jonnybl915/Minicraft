@@ -13,13 +13,17 @@ public class MyGdxGame extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
 	TextureRegion down;
+	TextureRegion downFlip;
 	TextureRegion up;
+	TextureRegion upFlip;
 	TextureRegion right;
 	TextureRegion left;
 	TextureRegion standingR;
 	TextureRegion standingL;
 	Animation walkRight;
 	Animation walkLeft;
+	Animation walkUp;
+	Animation walkDown;
 	float time;
 	int movementMem;
 	float x, y, xv, yv;
@@ -34,17 +38,26 @@ public class MyGdxGame extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		Texture tiles = new Texture("tiles.png");
 		TextureRegion[][] grid = TextureRegion.split(tiles, 16, 16);
+
+
 		down = grid[6][0];
+		downFlip = new TextureRegion(down);
+		downFlip.flip(true, false);
 		up = grid[6][1];
+		upFlip = new TextureRegion(up);
+		upFlip.flip(true, false);
 		right = grid[6][3];
 		left = new TextureRegion(right);
 		left.flip(true, false);
 		standingR = grid[6][2];
 		standingL = new TextureRegion(standingR);
 		standingL.flip(true, false);
+
+
 		walkRight = new Animation(0.2f, grid[6][3], grid[6][2]);
 		walkLeft = new Animation(0.2f, left, standingL);
-		walkUp = new Animation(0.2f, up, )
+		walkUp = new Animation(0.2f, up, upFlip);
+		walkDown = new Animation(0.2f, down, downFlip);
 	}
 
 	@Override
@@ -57,6 +70,12 @@ public class MyGdxGame extends ApplicationAdapter {
 		}
 		if(xv<0){
 			left = (walkLeft.getKeyFrame(time, true));
+		}
+		if(yv>0){
+			up = (walkUp.getKeyFrame(time, true));
+		}
+		if(yv<0){
+			down = (walkDown.getKeyFrame(time, true));
 		}
 
 		Gdx.gl.glClearColor(.2f, 1, .7f, .5f);
