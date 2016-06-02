@@ -17,7 +17,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	TextureRegion left;
 	TextureRegion runRight;
 
-
+	int movementMem;
 	float x, y, xv, yv;
 
 	static final float MAX_VELOCITY = 100;
@@ -42,20 +42,20 @@ public class MyGdxGame extends ApplicationAdapter {
 	@Override
 	public void render () {
 		move();
-		float movement = xv;
+
 		Gdx.gl.glClearColor(.2f, 1, .7f, .5f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		if(xv > 0){
+		if(movementMem ==3){
 			batch.draw(right, x, y, WIDTH*2, HEIGHT*2);
 		}
-		else if (xv < 0){
+		else if (movementMem ==4){
 			batch.draw(left, x, y, WIDTH*2, HEIGHT*2);
 		}
-		else if(yv < 0){
+		else if(movementMem == 2){
 			batch.draw(down, x, y, WIDTH*2, HEIGHT*2);
 		}
-		else if( yv > 0){
+		else if(movementMem == 1){
 			batch.draw(up, x, y, WIDTH*2, HEIGHT*2);
 		}
 		else{
@@ -66,15 +66,19 @@ public class MyGdxGame extends ApplicationAdapter {
 	public void move(){
 		if (Gdx.input.isKeyPressed(Input.Keys.UP)){
 			yv = MAX_VELOCITY;
+			movementMem = 1;
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
 			yv = -MAX_VELOCITY;
+			movementMem = 2;
 		}
 		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
 			xv = MAX_VELOCITY;
+			movementMem = 3;
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
 			xv = -MAX_VELOCITY;
+			movementMem = 4;
 		}
 
 		float delta = Gdx.graphics.getDeltaTime(); //amount of seconds which have passed since the last frame
