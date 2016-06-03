@@ -35,6 +35,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	TextureRegion huUp;
 	TextureRegion huUpFlip;
 	TextureRegion water;
+	TextureRegion water2;
 
 	Animation walkRight;
 	Animation walkLeft;
@@ -63,6 +64,9 @@ public class MyGdxGame extends ApplicationAdapter {
 		TextureRegion[][] grid = TextureRegion.split(tiles, 16, 16);
 
 		water = grid[3][1];
+		water2 = grid[3][0];
+		water2.setRegionWidth(48);
+		water2.setRegionHeight(24);
 
 		down = grid[6][0];
 		downFlip = new TextureRegion(down);
@@ -81,6 +85,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		huStandingL.flip(true, false);
 		huRight = grid [7][3];
 		huUp = grid[7][1];
+		huLeft = new TextureRegion(huRight);
+		huLeft.flip(true, false);
 		huUpFlip = new TextureRegion(huUp);
 		huUpFlip.flip(true, false);
 		huDown = grid[7][0];
@@ -118,7 +124,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		if(xv<0){
 			left = (walkLeft.getKeyFrame(time, true));
 			if(xv < -MAX_VELOCITY){							//**** needs some work.
-				left = runLeft.getKeyFrame(time, false);	//******
+				left = runLeft.getKeyFrame(time, true);	//******
+				System.out.println();
 			}
 		}
 		if(yv>0){
@@ -168,10 +175,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		batch.draw(water, 430, 540);
 		batch.draw(water, 430, 550);
 		batch.draw(water, 430, 560);
-
-
-
-
+		//batch.draw(water2, 200, 200, WIDTH*3f, HEIGHT*4f);
 
 		TextureRegion tempImg;
 
@@ -179,8 +183,9 @@ public class MyGdxGame extends ApplicationAdapter {
 
 			tempImg = right;
 		}
-		else if (movementMem ==4){
+		else if (movementMem == 4){
 			tempImg = left;
+			System.out.println();
 		}
 		else if(movementMem == 2){
 			tempImg = down;
