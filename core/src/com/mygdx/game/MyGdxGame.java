@@ -34,7 +34,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	TextureRegion huLeft;
 	TextureRegion huUp;
 	TextureRegion huUpFlip;
-
+	TextureRegion water;
 
 	Animation walkRight;
 	Animation walkLeft;
@@ -62,6 +62,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		Texture tiles = new Texture("tiles.png");
 		TextureRegion[][] grid = TextureRegion.split(tiles, 16, 16);
 
+		water = grid[3][1];
 
 		down = grid[6][0];
 		downFlip = new TextureRegion(down);
@@ -136,8 +137,41 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		Gdx.gl.glClearColor(.4f, 1, .4f, .8f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 		batch.begin();
-		font.draw(batch, "Welcome Player \n Use the arrow keys to move around, \n If you're looking for a boost, use the space bar.", 65f, 740f);
+		font.draw(batch, "Welcome Player \n Use the arrow keys to move around, \n If you're looking for a boost, use the space bar. \n Ohh....and careful with the water!", 65f, 740f);
+		batch.draw(water, 400, 500);
+		batch.draw(water, 400, 510);
+		batch.draw(water, 400, 520);
+		batch.draw(water, 400, 530);
+		batch.draw(water, 400, 540);
+		batch.draw(water, 400, 550);
+		batch.draw(water, 400, 560);
+		batch.draw(water, 410, 500);
+		batch.draw(water, 410, 510);
+		batch.draw(water, 410, 520);
+		batch.draw(water, 410, 530);
+		batch.draw(water, 410, 540);
+		batch.draw(water, 410, 550);
+		batch.draw(water, 410, 560);
+		batch.draw(water, 420, 500);
+		batch.draw(water, 420, 510);
+		batch.draw(water, 420, 520);
+		batch.draw(water, 420, 530);
+		batch.draw(water, 420, 540);
+		batch.draw(water, 420, 550);
+		batch.draw(water, 420, 560);
+		batch.draw(water, 430, 500);
+		batch.draw(water, 430, 510);
+		batch.draw(water, 430, 520);
+		batch.draw(water, 430, 530);
+		batch.draw(water, 430, 540);
+		batch.draw(water, 430, 550);
+		batch.draw(water, 430, 560);
+
+
+
+
 
 		TextureRegion tempImg;
 
@@ -208,6 +242,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		}
 		if (y>Gdx.graphics.getHeight()){
 			y=-5;
+		}
+		if((x>=400 && x<=430) && (y<=560 && y>=500)){
+			x = 0;
+			y=0;
 		}
 		float delta = Gdx.graphics.getDeltaTime(); //amount of seconds which have passed since the last frame
 		y+= yv * delta;
