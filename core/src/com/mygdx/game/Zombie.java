@@ -29,6 +29,7 @@ public class Zombie extends ApplicationAdapter {
     TextureRegion huUp;
     TextureRegion huUpFlip;
 
+
     Animation walkRight;
     Animation walkLeft;
     Animation walkUp;
