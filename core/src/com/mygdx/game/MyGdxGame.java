@@ -3,14 +3,20 @@ package com.mygdx.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class MyGdxGame extends ApplicationAdapter {
 	SpriteBatch batch;
+	SpriteBatch spriteBatch;
+
+	BitmapFont font;
+	CharSequence str;
 
 	TextureRegion down;
 	TextureRegion downFlip;
@@ -79,7 +85,6 @@ public class MyGdxGame extends ApplicationAdapter {
 		huDown = grid[7][0];
 		huDownFlip = new TextureRegion(huDown);
 		huDownFlip.flip(true, false);
-		Zombie z = new Zombie();
 
 		walkRight = new Animation(0.2f, grid[6][3], grid[6][2]);
 		walkLeft = new Animation(0.2f, left, standingL);
@@ -89,10 +94,17 @@ public class MyGdxGame extends ApplicationAdapter {
 		runLeft = new Animation(0.2f, huLeft, huStandingL);
 		runUp = new Animation(0.2f, huUp, huUpFlip);
 		runDown = new Animation(0.2f, huDown, huDownFlip);
+
+
+		//info for drawing in text -- http://stackoverflow.com/questions/12466385/how-can-i-draw-text-using-libgdx-java
+		font = new BitmapFont();
+		font.setColor(Color.BROWN);
+
 	}
 
 	@Override
 	public void render () {
+
 		move();
 		time += Gdx.graphics.getDeltaTime();
 
@@ -122,9 +134,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		}
 
 
-		Gdx.gl.glClearColor(.2f, 1, .7f, .5f);
+		Gdx.gl.glClearColor(.4f, 1, .4f, .8f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
+		font.draw(batch, "Welcome Player \n Use the arrow keys to move around, \n If you're looking for a boost, use the space bar.", 65f, 740f);
 
 		TextureRegion tempImg;
 

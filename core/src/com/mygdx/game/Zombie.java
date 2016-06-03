@@ -37,39 +37,27 @@ public class Zombie extends ApplicationAdapter {
     Animation runRight;
     Animation runLeft;
     Animation runUp;
-
+    Zombie bob = new Zombie();
     @Override
     public void create () {
         batch = new SpriteBatch();
         Texture tiles = new Texture("tiles.png");
         TextureRegion[][] grid = TextureRegion.split(tiles, 16, 16);
 
-
-        down = grid[6][0];
+        down = grid[6][4];
         downFlip = new TextureRegion(down);
         downFlip.flip(true, false);
-        up = grid[6][1];
+        up = grid[6][5];
         upFlip = new TextureRegion(up);
         upFlip.flip(true, false);
-        right = grid[6][3];
+        right = grid[6][7];
         left = new TextureRegion(right);
         left.flip(true, false);
-        standingR = grid[6][2];
+        standingR = grid[6][6];
         standingL = new TextureRegion(standingR);
         standingL.flip(true, false);
-        huStanding = grid [7][2];
-        huStandingL = new TextureRegion(huStanding);
-        huStandingL.flip(true, false);
-        huRight = grid [7][3];
-        huUp = grid[7][1];
-        huUpFlip = new TextureRegion(huUp);
-        huUpFlip.flip(true, false);
-        huDown = grid[7][0];
-        huDownFlip = new TextureRegion(huDown);
-        huDownFlip.flip(true, false);
-        Zombie z = new Zombie();
 
-        walkRight = new Animation(0.2f, grid[6][3], grid[6][2]);
+        walkRight = new Animation(0.2f, right, standingR);
         walkLeft = new Animation(0.2f, left, standingL);
         walkUp = new Animation(0.2f, up, upFlip);
         walkDown = new Animation(0.2f, down, downFlip);
@@ -78,4 +66,5 @@ public class Zombie extends ApplicationAdapter {
         runUp = new Animation(0.2f, huUp, huUpFlip);
         runDown = new Animation(0.2f, huDown, huDownFlip);
     }
+
 }
