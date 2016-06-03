@@ -79,7 +79,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		huDown = grid[7][0];
 		huDownFlip = new TextureRegion(huDown);
 		huDownFlip.flip(true, false);
-
+		Zombie z = new Zombie();
 
 		walkRight = new Animation(0.2f, grid[6][3], grid[6][2]);
 		walkLeft = new Animation(0.2f, left, standingL);
